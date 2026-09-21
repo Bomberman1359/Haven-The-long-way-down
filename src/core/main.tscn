@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/core/game.gd" id="1_game"]
+[ext_resource type="Script" path="res://src/world/terrain.gd" id="2_terrain"]
+[ext_resource type="Script" path="res://src/core/hud.gd" id="3_hud"]
+[ext_resource type="Script" path="res://src/core/signs.gd" id="4_signs"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_game")
+
+[node name="Dark" type="CanvasModulate" parent="."]
+color = Color(0.3, 0.29, 0.4, 1)
+
+[node name="Terrain" type="Node2D" parent="."]
+script = ExtResource("2_terrain")
+
+[node name="Solids" type="Node2D" parent="."]
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Fx" type="Node2D" parent="."]
+
+[node name="Cam" type="Camera2D" parent="."]
+
+[node name="Signs" type="CanvasLayer" parent="."]
+layer = 1
+follow_viewport_enabled = true
+
+[node name="Root" type="Node2D" parent="Signs"]
+script = ExtResource("4_signs")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Root" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_hud")

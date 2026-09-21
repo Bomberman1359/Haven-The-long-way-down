@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://src/player/player.gd" id="1_player"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player.png" id="2_body"]
+[ext_resource type="Texture2D" path="res://assets/sprites/lantern.png" id="3_lantern"]
+[ext_resource type="Texture2D" path="res://assets/sprites/light.png" id="4_light"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(10, 16)
+
+[node name="Player" type="CharacterBody2D"]
+z_index = 5
+collision_layer = 2
+collision_mask = 1
+floor_snap_length = 3.0
+script = ExtResource("1_player")
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_body")
+
+[node name="Body" type="Sprite2D" parent="."]
+position = Vector2(0, -2)
+texture = ExtResource("2_body")
+hframes = 4
+
+[node name="Lantern" type="Sprite2D" parent="."]
+position = Vector2(7, 1)
+texture = ExtResource("3_lantern")
+
+[node name="Lamp" type="PointLight2D" parent="."]
+position = Vector2(0, -2)
+texture_filter = 2
+color = Color(1, 0.8, 0.5, 1)
+energy = 1.4
+texture = ExtResource("4_light")
+texture_scale = 1.17
