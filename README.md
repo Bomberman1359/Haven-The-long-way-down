@@ -14,7 +14,7 @@
 
 # Haven: the long way down
 
-A 2D platformer made in Godot 4.7, and the side-view cousin of
+A 2D platformer made in Godot 4.7, and the platformer cousin of
 [Haven](https://github.com/Bomberman1359/Haven). Same lantern, same shadows,
 same music. There is no fighting in this one. You run, you jump, you keep the
 flame fed, and you try to reach the stairs before it gutters.
@@ -29,7 +29,7 @@ No install, no account.
 Your lantern burns fuel every second, and the light shrinks as it goes. It also
 burns a little faster on every floor. Everything that hurts you costs fuel:
 spikes, drips from the ceiling, rocks that let go of it, anything with teeth,
-even falling into a pit. There are no hearts. When the fuel hits zero the
+even falling into a pit. There are no hearts. When the fuel hits zero, the
 lantern goes out, and every shadow on the floor comes straight for you, plus
 nine more that the dark sends along. 
 
