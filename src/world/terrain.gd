@@ -75,6 +75,10 @@ func _draw() -> void:
 					_spikes(p, t, false)
 				"v":
 					_spikes(p, t, true)
+				"m", "~":
+					_rail_h(p, t)
+				"n", ":":
+					_rail_v(p, t)
 
 
 func _pillar(px: int, t: float) -> void:
@@ -129,6 +133,18 @@ func _ledge(x: int, y: int, p: Vector2, t: float) -> void:
 	# a little bracket under every other plank
 	if (x + y) % 2 == 0:
 		draw_rect(Rect2(p + Vector2(6, 6), Vector2(4, 3)), EDGE_SIDE)
+
+
+func _rail_h(p: Vector2, t: float) -> void:
+	## the track a sliding slab runs along
+	for i in 4:
+		draw_rect(Rect2(p.x + i * 4.0, p.y + 2.0, 2, 1), Color(0.45, 0.58, 0.85, 0.55))
+
+
+func _rail_v(p: Vector2, t: float) -> void:
+	## the chain a lift rides on, down the middle of its slab
+	for i in 4:
+		draw_rect(Rect2(p.x + 23.0, p.y + i * 4.0, 2, 2), Color(0.45, 0.58, 0.85, 0.5))
 
 
 func _spikes(p: Vector2, t: float, down: bool) -> void:

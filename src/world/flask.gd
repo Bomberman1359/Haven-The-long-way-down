@@ -2,7 +2,7 @@ extends Node2D
 ## Lamp oil. Walk into it.
 
 const PICK_R := 12.0
-const AMOUNT := 25.0
+const AMOUNT := 20.0
 
 var t := 0.0
 var game

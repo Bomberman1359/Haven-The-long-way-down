@@ -40,7 +40,9 @@ func _physics_process(delta: float) -> void:
 	match state:
 		SHAKING:
 			t += delta
-			if t >= HOLD:
+			# deeper floors are built from worse stone
+			var hold_for := HOLD if game.depth <= 3 else HOLD * 0.78
+			if t >= hold_for:
 				state = GONE
 				t = 0.0
 				drop = 0.0

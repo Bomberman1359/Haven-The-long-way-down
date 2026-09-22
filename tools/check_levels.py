@@ -11,7 +11,8 @@ anything it accepts has some slack in it. For every floor it checks that:
   - there is nowhere you can stand that you cannot get back out of.
 
 Run it from the project folder:  python3 tools/check_levels.py
-Standard library only. The softlock pass takes a minute or two.
+Standard library only. The last check, the one that looks for places to get
+stuck, is slow on floors this size. Add --quick to skip it.
 """
 import math
 import os
@@ -34,9 +35,31 @@ HAZARD = set("^v")
 class Floor:
     def __init__(self, name, rows):
         self.name = name
-        self.g = [list(r.replace(".", " ")) for r in rows]
-        self.h = len(self.g)
-        self.w = len(self.g[0])
+        self.raw = [list(r.replace(".", " ")) for r in rows]
+        self.h = len(self.raw)
+        self.w = len(self.raw[0])
+        self.g = self._effective()
+
+    def _effective(self):
+        """What the pretend player walks on. A rail or a lift counts as a
+        ledge along its whole length, since the slab passes every point of it
+        and you can always wait for it. Shadows, oil, leaks and loose stones
+        are air."""
+        g = [row[:] for row in self.raw]
+        for y in range(self.h):
+            for x in range(self.w):
+                c = self.raw[y][x]
+                if c in "m~":
+                    g[y][x] = "-"
+                elif c in "Fkbwlhfd":
+                    g[y][x] = " "
+        for y in range(self.h):
+            for x in range(self.w):
+                if self.raw[y][x] in "n:":
+                    for dx in range(3):
+                        if x + dx < self.w and self.raw[y][x + dx] in " n:":
+                            g[y][x + dx] = "-"
+        return g
 
     def at(self, x, y):
         if x < 0 or x >= self.w or y < 0:
@@ -46,7 +69,7 @@ class Floor:
         return self.g[y][x]
 
     def find(self, ch):
-        return [(x, y) for y in range(self.h) for x in range(self.w) if self.g[y][x] == ch]
+        return [(x, y) for y in range(self.h) for x in range(self.w) if self.raw[y][x] == ch]
 
 
 def box_hits(fl, x0, y0, x1, y1, kinds):
@@ -162,7 +185,7 @@ def load_floors(path):
 
 def check(fl, deep=True):
     problems = []
-    widths = {len(r) for r in fl.g}
+    widths = {len(r) for r in fl.raw}
     if len(widths) != 1:
         problems.append("rows are not all the same width: %s" % sorted(widths))
         return problems

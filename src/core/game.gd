@@ -8,8 +8,8 @@ extends Node2D
 enum { MENU, PLAY, DYING, DEAD, PAUSED, WIN }
 
 const TILE := 16
-const SPIKE_COST := 20.0
-const FALL_COST := 20.0
+const SPIKE_COST := 22.0
+const FALL_COST := 25.0
 const SAVE_PATH := "user://long_way_down.cfg"
 const SWARM_EXTRA := 9
 
@@ -21,6 +21,8 @@ const StairScene: PackedScene = preload("res://src/world/stair.tscn")
 const FlaskScene: PackedScene = preload("res://src/world/flask.tscn")
 const Crumble = preload("res://src/world/crumble.gd")
 const Drip = preload("res://src/world/drip.gd")
+const Mover = preload("res://src/world/mover.gd")
+const Stone = preload("res://src/world/stone.gd")
 const SparkTex: Texture2D = preload("res://assets/sprites/spark.png")
 
 const AMBIENT := Color(0.46, 0.44, 0.58)
@@ -263,6 +265,8 @@ func _build_solids() -> void:
 			else:
 				x += 1
 
+	_build_movers()
+
 	# cracked stone, one body each so they can fall on their own
 	for y in lh:
 		for x in lw:
@@ -272,6 +276,55 @@ func _build_solids() -> void:
 				c.position = Vector2(x * TILE, y * TILE)
 				c.cell = Vector2i(x, y)
 				solids.add_child(c)
+
+
+func _build_movers() -> void:
+	## Rails in the map become moving slabs. A run of m/~ along a row is a
+	## sideways rail and the slab starts at the m. A run of n/: down a column is
+	## a lift, three tiles wide, starting at the n.
+	for y in lh:
+		var x := 0
+		while x < lw:
+			var ch := rows[y][x]
+			if ch == "m" or ch == "~":
+				var x0 := x
+				var start := -1
+				while x < lw and (rows[y][x] == "m" or rows[y][x] == "~"):
+					if rows[y][x] == "m":
+						start = x
+					x += 1
+				var x1 := x - 1
+				var lo := Vector2(x0 * TILE, y * TILE)
+				var hi := Vector2((x1 - 2) * TILE, y * TILE)
+				_add_mover(lo, hi, 45.0, start >= 0 and start > (x0 + x1) / 2.0)
+			else:
+				x += 1
+	for x in lw:
+		var y := 0
+		while y < lh:
+			var ch := rows[y][x]
+			if ch == "n" or ch == ":":
+				var y0 := y
+				var start := -1
+				while y < lh and (rows[y][x] == "n" or rows[y][x] == ":"):
+					if rows[y][x] == "n":
+						start = y
+					y += 1
+				var y1 := y - 1
+				_add_mover(Vector2(x * TILE, y0 * TILE), Vector2(x * TILE, y1 * TILE), 55.0,
+					start >= 0 and start > (y0 + y1) / 2.0)
+			else:
+				y += 1
+
+
+func _add_mover(from: Vector2, to: Vector2, spd: float, start_at_far_end: bool) -> void:
+	var m := AnimatableBody2D.new()
+	m.set_script(Mover)
+	solids.add_child(m)
+	if start_at_far_end:
+		m.setup(to, from, spd)
+	else:
+		m.setup(from, to, spd)
 
 
 func _spawn_entities() -> void:
@@ -297,9 +350,14 @@ func _spawn_entities() -> void:
 					var f := FlaskScene.instantiate()
 					f.position = foot
 					entities.add_child(f)
-				"w", "l", "h":
-					var kind := {"w": 0, "l": 1, "h": 2}[c] as int
+				"w", "l", "h", "k", "b":
+					var kind := {"w": 0, "l": 1, "h": 2, "k": 3, "b": 4}[c] as int
 					_spawn_shadow(foot + Vector2(0, -8), kind)
+				"F":
+					var st := Node2D.new()
+					st.set_script(Stone)
+					st.position = Vector2(x * TILE + TILE * 0.5, y * TILE)
+					entities.add_child(st)
 				"d":
 					var d := Node2D.new()
 					d.set_script(Drip)

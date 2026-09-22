@@ -2,7 +2,7 @@ extends Node2D
 ## A leak in the ceiling. Every so often a drop gathers and falls. Water and
 ## flames do not get along, so a drop on your lantern costs you fuel.
 
-const DRIP_COST := 12.0
+const DRIP_COST := 15.0
 const GRAV := 620.0
 
 var t := 0.0
