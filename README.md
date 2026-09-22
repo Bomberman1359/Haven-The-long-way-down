@@ -31,8 +31,7 @@ burns a little faster on every floor. Everything that hurts you costs fuel:
 spikes, drips from the ceiling, rocks that let go of it, anything with teeth,
 even falling into a pit. There are no hearts. When the fuel hits zero the
 lantern goes out, and every shadow on the floor comes straight for you, plus
-nine more that the dark sends along. That is the only way to die, and it is
-very final.
+nine more that the dark sends along. 
 
 Oil is scarce. There are sixteen flasks in the whole game, 20 fuel each, and a
 lot of them sit somewhere slightly annoying.
@@ -55,13 +54,13 @@ your place if things go badly. Five floors, and then you are at the bottom.
 
 ## The floors
 
-1. **Mind the Gap.** The tutorial, more or less. The walls tell you what to do,
+1. **Mind the Gap.** The tutorial. The walls tell you what to do,
    and the last stretch is a ride on a moving slab over a pit.
 2. **Loose Stones.** Cracked floors that drop out from under you, rocks that let
    go of the ceiling, the first leeches, and a long tunnel with spikes overhead
    and a floor that crumbles behind you.
 3. **The Leaky Hall.** A shaft 98 tiles deep. The ceiling drips on your only
-   flame, four stalkers wait on the way down, and past the beacon a slab ferries
+   flame, four stalkers wait on the way down, and past the beacon a slab takes
    you over a spike bed before a lift takes you the rest of the way.
 4. **Leech Country.** Seven leeches, two brutes, two husks and a stalker. Three
    rails, one over spikes and two over nothing at all.
@@ -69,18 +68,17 @@ your place if things go badly. Five floors, and then you are at the bottom.
    high road, a dark corridor with spikes in the ceiling, two rails over a pit,
    and one last spike pit to cross on ledges and cracked stone.
 
-The first two floors teach you the rules. From the third floor on, the lantern
-burns faster, the dark gets darker, and the floors stop being nice about it.
+From the third floor on, the lantern burns faster
 
 ## What is down there
 
 | | |
 | --- | --- |
-| **Wisp** | Circles just outside your light. Harmless while the lantern burns, which is not the same as friendly. |
+| **Wisp** | Circles just outside your light. Harmless while the lantern burns. |
 | **Leech** | Leans into the light and drinks it through a long green straw. It gets thirstier every floor down. Keep moving and it cannot keep up. |
 | **Husk** | A slow patrol that ignores your light completely. Bumping into it costs 18 fuel. |
-| **Stalker** | Only moves while your back is turned. Look at it and it locks in place. If it reaches you, that is 20 fuel. |
-| **Brute** | Hangs in the air until you are level with it, winds up for half a second, then charges along the floor. Jump it. A hit costs 25. |
+| **Stalker** | Only moves while your back is turned. Look at it and it locks in place. If it reaches you, it takes away 20 fuel. |
+| **Brute** | Hangs in the air until you are level with it, winds up for half a second, then charges along the floor. Jump to avoid it. A hit costs 25 fuel. |
 
 <table>
   <tr>
@@ -97,7 +95,7 @@ burns faster, the dark gets darker, and the floors stop being nice about it.
 | **Cracked stone** | Holds for about half a second after you land on it, then drops. From the fourth floor on it gives way faster. It grows back after a few seconds. |
 | **Loose stones** | Hang in the ceiling, shake when you walk underneath, then fall. 20 fuel if one lands on you. They grow back too, so the same spot can get you twice. |
 | **Leaks** | A drop every two seconds or so. 15 fuel if it lands on you. |
-| **Slabs and lifts** | Slide along a rail or up and down a shaft. If one is at the far end, wait for it. |
+| **Slabs and lifts** | Slide along a rail or up and down a shaft. |
 | **Pits** | 25 fuel, and you are put back on the last solid ground you stood on. |
 
 <table>
@@ -164,8 +162,7 @@ the same gravity and jump as the real one, just a bit slower on its feet. Slabs
 and lifts count as ledges along their whole run, since you can always wait for
 one to come back. It fails if the beacon or the stairs cannot be reached, if any
 oil is out of reach, or if there is anywhere you can stand and never get out
-of. It uses the standard library only. The full run is slow on floors this
-size, so `--quick` skips the part that looks for places to get stuck.
+of. It uses the standard library only. 
 
 ## The art
 
